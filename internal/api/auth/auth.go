@@ -12,6 +12,7 @@ type Implementation struct {
 
 // NewImplementation creates a new auth API implementation.
 func NewImplementation(authService authService.AuthService) *Implementation {
+
 	return &Implementation{
 		authService: authService,
 	}
