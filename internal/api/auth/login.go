@@ -3,8 +3,8 @@ package auth
 import (
 	"context"
 
-	"github.com/BelyaevEI/test-assignment/internal/converter"
-	desc "github.com/BelyaevEI/test-assignment/pkg/auth_v1"
+	"github.com/BelyaevEI/playlist/internal/converter"
+	desc "github.com/BelyaevEI/playlist/pkg/auth_v1"
 )
 
 func (i *Implementation) Login(ctx context.Context, req *desc.LoginRequest) (*desc.Response, error) {

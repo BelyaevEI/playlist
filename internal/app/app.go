@@ -7,8 +7,8 @@ import (
 	"sync"
 
 	"github.com/BelyaevEI/platform_common/pkg/closer"
-	initutils "github.com/BelyaevEI/test-assignment/internal/init_utils"
-	"github.com/BelyaevEI/test-assignment/internal/logger"
+	initutils "github.com/BelyaevEI/playlist/internal/init_utils"
+	"github.com/BelyaevEI/playlist/internal/logger"
 
 	"google.golang.org/grpc"
 )

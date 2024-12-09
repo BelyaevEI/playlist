@@ -3,8 +3,8 @@ package auth
 import (
 	"context"
 
-	"github.com/BelyaevEI/test-assignment/internal/model"
-	authRepo "github.com/BelyaevEI/test-assignment/internal/repository/auth"
+	"github.com/BelyaevEI/playlist/internal/model"
+	authRepo "github.com/BelyaevEI/playlist/internal/repository/auth"
 )
 
 // AuthService represents a service for auth entities.

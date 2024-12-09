@@ -3,9 +3,9 @@ package app
 import (
 	"context"
 
-	"github.com/BelyaevEI/test-assignment/internal/config"
-	"github.com/BelyaevEI/test-assignment/internal/logger"
-	descAuth "github.com/BelyaevEI/test-assignment/pkg/auth_v1"
+	"github.com/BelyaevEI/playlist/internal/config"
+	"github.com/BelyaevEI/playlist/internal/logger"
+	descAuth "github.com/BelyaevEI/playlist/pkg/auth_v1"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

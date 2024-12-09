@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"github.com/BelyaevEI/test-assignment/internal/model"
-	desc "github.com/BelyaevEI/test-assignment/pkg/auth_v1"
+	"github.com/BelyaevEI/playlist/internal/model"
+	desc "github.com/BelyaevEI/playlist/pkg/auth_v1"
 )
 
 func ToLoginFromDesc(user *desc.LoginRequest) *model.UserLogin {

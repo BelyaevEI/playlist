@@ -3,10 +3,10 @@ package app
 import (
 	"context"
 
-	"github.com/BelyaevEI/test-assignment/internal/api/auth"
-	"github.com/BelyaevEI/test-assignment/internal/config"
-	authRepo "github.com/BelyaevEI/test-assignment/internal/repository/auth"
-	authService "github.com/BelyaevEI/test-assignment/internal/service/auth"
+	"github.com/BelyaevEI/playlist/internal/api/auth"
+	"github.com/BelyaevEI/playlist/internal/config"
+	authRepo "github.com/BelyaevEI/playlist/internal/repository/auth"
+	authService "github.com/BelyaevEI/playlist/internal/service/auth"
 )
 
 type serviceProvider struct {

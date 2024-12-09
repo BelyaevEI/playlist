@@ -6,8 +6,8 @@ import (
 	"log"
 
 	"github.com/BelyaevEI/platform_common/pkg/closer"
-	"github.com/BelyaevEI/test-assignment/internal/model"
-	"github.com/BelyaevEI/test-assignment/internal/storage/postgre"
+	"github.com/BelyaevEI/playlist/internal/model"
+	"github.com/BelyaevEI/playlist/internal/storage/postgre"
 )
 
 // AuthRepository represents a repository for auth entities.

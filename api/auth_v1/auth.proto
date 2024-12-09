@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth_v1;
 
-option go_package = "github.com/BelyaevEI/test-assignment/pkg/auth_v1;auth_v1";
+option go_package = "github.com/BelyaevEI/playlist/pkg/auth_v1;auth_v1";
 
 service AuthV1{
     rpc Login(LoginRequest) returns (Response);

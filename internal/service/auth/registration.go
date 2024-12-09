@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/BelyaevEI/test-assignment/internal/logger"
-	"github.com/BelyaevEI/test-assignment/internal/model"
+	"github.com/BelyaevEI/playlist/internal/logger"
+	"github.com/BelyaevEI/playlist/internal/model"
 )
 
 func (s *serv) Registration(ctx context.Context, userRegistration *model.UserRegistration) (string, error) {

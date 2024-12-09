@@ -1,8 +1,8 @@
 package auth
 
 import (
-	authService "github.com/BelyaevEI/test-assignment/internal/service/auth"
-	desc "github.com/BelyaevEI/test-assignment/pkg/auth_v1"
+	authService "github.com/BelyaevEI/playlist/internal/service/auth"
+	desc "github.com/BelyaevEI/playlist/pkg/auth_v1"
 )
 
 type Implementation struct {

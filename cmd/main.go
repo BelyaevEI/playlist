@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/BelyaevEI/test-assignment/internal/app"
+	"github.com/BelyaevEI/playlist/internal/app"
 )
 
 func main() {
