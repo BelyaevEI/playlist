@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package auth_v1;
+
+option go_package = "github.com/BelyaevEI/test-assignment/pkg/auth_v1;auth_v1";
+
+service AuthV1{
+    rpc Login(LoginRequest) returns (Response);
+    rpc Registration(RegistrationRequest) returns (Response);
+}
+
+message LoginRequest {
+    string login = 1;
+    string password = 2;
+  }
+  
+message Response {
+    string refresh_token = 1;
+  }
+
+message RegistrationRequest {
+    string login = 1;
+    string password = 2;
+    string confirm_password = 3;
+  }
