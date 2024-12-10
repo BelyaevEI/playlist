@@ -6,13 +6,13 @@ import (
 	"log"
 
 	"github.com/BelyaevEI/platform_common/pkg/closer"
-	"github.com/BelyaevEI/playlist/internal/model"
 	"github.com/BelyaevEI/playlist/internal/storage/postgre"
 )
 
 // AuthRepository represents a repository for auth entities.
 type AuthRepository interface {
-	CreateUser(context.Context, model.UserRegistration) error
+	CreateUser(ctx context.Context, login, hashPassword, secretKey string) error
+	CheckLoginUnique(context.Context, string) error
 }
 
 type repo struct {
