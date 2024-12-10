@@ -34,6 +34,7 @@ linters:
     - errcheck
     - goconst
     - goimports
+    - gosec
     - govet
     - ineffassign
     - megacheck
