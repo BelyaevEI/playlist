@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/BelyaevEI/playlist/internal/logger"
@@ -10,7 +11,7 @@ import (
 func (r *repo) CreateUser(ctx context.Context, login, hashedPassword, secretKey string) error {
 	query := `
 		INSERT INTO users (user_login, pass_hash, secret_word)
-		VALUES ($1, $2, $3))
+		VALUES ($1, $2, $3)
 	`
 
 	_, err := r.db.ExecContext(ctx, query, login, hashedPassword, secretKey)
@@ -27,8 +28,8 @@ func (r *repo) CheckLoginUnique(ctx context.Context, login string) error {
 	query := `SELECT user_login FROM users WHERE user_login = $1`
 
 	err := r.db.QueryRowContext(ctx, query, login).Scan(&notUnique)
-	if err != nil {
-		logger.Error(fmt.Sprintf("check unique login: %s", login))
+	if err != nil && err != sql.ErrNoRows {
+		logger.Error(fmt.Sprintf("check unique login is failed: %s", err.Error()))
 		return err
 	}
 

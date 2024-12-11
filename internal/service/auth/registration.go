@@ -15,7 +15,7 @@ func (s *serv) Registration(ctx context.Context, userRegistration *model.UserReg
 
 	// Check password = confirm password
 	if userRegistration.Password != userRegistration.ConfirmPassword {
-		logger.Info("password and confirm not equal")
+		logger.Info("password and confirm password not equal")
 		return "", errors.New("password and confirm password not equal")
 	}
 
@@ -51,6 +51,11 @@ func (s *serv) Registration(ctx context.Context, userRegistration *model.UserReg
 	}
 
 	// Create a new jwt for user
+	// if generating token is failed then user must be log in with login and password
+	token, err := generateToken(userRegistration.Login, secretWord)
+	if err != nil {
+		logger.Debug(err.Error())
+	}
 
-	return "", nil
+	return token, nil
 }
