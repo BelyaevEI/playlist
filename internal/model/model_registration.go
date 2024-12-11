@@ -2,8 +2,9 @@ package model
 
 // UserLogin represents a user login entity with Login and Password fields.
 type UserLogin struct {
-	Login    string
-	Password string
+	Login      string
+	Password   string
+	SecretWord string
 }
 
 // UserRegistration represents a user registration entity with Login and Password fields.

@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/BelyaevEI/platform_common/pkg/closer"
+	"github.com/BelyaevEI/playlist/internal/model"
 	"github.com/BelyaevEI/playlist/internal/storage/postgre"
 )
 
@@ -13,6 +14,7 @@ import (
 type AuthRepository interface {
 	CreateUser(ctx context.Context, login, hashPassword, secretKey string) error
 	CheckLoginUnique(context.Context, string) error
+	SelectUser(ctx context.Context, userLogin *model.UserLogin) (model.UserLogin, error)
 }
 
 type repo struct {

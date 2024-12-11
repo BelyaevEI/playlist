@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/BelyaevEI/playlist/internal/config"
+	"github.com/BelyaevEI/playlist/internal/interceptor"
 	"github.com/BelyaevEI/playlist/internal/logger"
 	descAuth "github.com/BelyaevEI/playlist/pkg/auth_v1"
 
@@ -32,7 +33,7 @@ func (a *App) initDependens(ctx context.Context) error {
 
 func (a *App) initGRPCServer(ctx context.Context) error {
 
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
+	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(interceptor.LogInterceptor))
 
 	reflection.Register(a.grpcServer)
 
