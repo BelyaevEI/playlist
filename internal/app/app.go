@@ -51,10 +51,10 @@ func (a *App) Run(ctx context.Context) error {
 		if err != nil {
 			logger.Error(fmt.Sprintf("failed to run grpc server: %v", err))
 		}
-
 	}()
 
 	initutils.GracefulShutdown(ctx, cancel, wg)
+
 	return nil
 }
 

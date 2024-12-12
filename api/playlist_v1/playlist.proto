@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package auth_v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/BelyaevEI/playlist/pkg/playlist_v1;playlist_v1";
+
+service PlaylistV1{
+    rpc AddSong(AddSongRequest) returns (google.protobuf.Empty);
+    rpc DeleteSong(AddSongRequest) returns(google.protobuf.Empty);
+    rpc Play(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc Pause(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc Next(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc Prev(google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+message AddSongRequest {
+    string song_name = 1;
+    string artist = 2;
+    int32 duration = 3;
+  }
+  

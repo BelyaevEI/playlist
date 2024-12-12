@@ -6,6 +6,7 @@ import (
 
 	"github.com/BelyaevEI/playlist/internal/logger"
 	"github.com/BelyaevEI/playlist/internal/model"
+
 	"golang.org/x/crypto/bcrypt"
 )
 

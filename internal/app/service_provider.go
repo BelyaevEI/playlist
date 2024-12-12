@@ -4,9 +4,12 @@ import (
 	"context"
 
 	"github.com/BelyaevEI/playlist/internal/api/auth"
+	"github.com/BelyaevEI/playlist/internal/api/playlist"
 	"github.com/BelyaevEI/playlist/internal/config"
 	authRepo "github.com/BelyaevEI/playlist/internal/repository/auth"
+	playlistRepo "github.com/BelyaevEI/playlist/internal/repository/playlist"
 	authService "github.com/BelyaevEI/playlist/internal/service/auth"
+	playlistService "github.com/BelyaevEI/playlist/internal/service/playlist"
 )
 
 type serviceProvider struct {
@@ -14,6 +17,10 @@ type serviceProvider struct {
 	authImpl       *auth.Implementation
 	authService    authService.AuthService
 	authRepository authRepo.AuthRepository
+
+	plImpl       *playlist.Implementation
+	plService    playlistService.PlaylistService
+	plRepository playlistRepo.PlaylistRepository
 }
 
 func newServiceProvider(cfg config.Config) *serviceProvider {
