@@ -7,6 +7,7 @@ import (
 	"github.com/BelyaevEI/playlist/internal/interceptor"
 	"github.com/BelyaevEI/playlist/internal/logger"
 	descAuth "github.com/BelyaevEI/playlist/pkg/auth_v1"
+	descPlaylist "github.com/BelyaevEI/playlist/pkg/playlist_v1"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -37,8 +38,9 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 
 	reflection.Register(a.grpcServer)
 
-	//start initializating DI - conteiner
+	//start initializating DI - conteiners
 	descAuth.RegisterAuthV1Server(a.grpcServer, a.serviceProvider.AuthImpl(ctx))
+	descPlaylist.RegisterPlaylistV1Server(a.grpcServer, a.serviceProvider.PlaylistImpl(ctx))
 
 	return nil
 }

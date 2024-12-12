@@ -21,10 +21,15 @@ type serviceProvider struct {
 	plImpl       *playlist.Implementation
 	plService    playlistService.PlaylistService
 	plRepository playlistRepo.PlaylistRepository
+
+	userLoginCH chan string
 }
 
 func newServiceProvider(cfg config.Config) *serviceProvider {
-	return &serviceProvider{config: cfg}
+	return &serviceProvider{
+		config:      cfg,
+		userLoginCH: make(chan string),
+	}
 }
 
 // AuthImlp - implementation auth api layer
@@ -52,4 +57,36 @@ func (s *serviceProvider) AuthRepository(ctx context.Context) authRepo.AuthRepos
 	}
 
 	return s.authRepository
+}
+
+// PlaylistRepositiry - implementation repository layer
+func (s *serviceProvider) PlaylistRepository(ctx context.Context) playlistRepo.PlaylistRepository {
+	if s.plRepository == nil {
+		s.plRepository = playlistRepo.NewRepository(ctx, s.config.DSN())
+	}
+
+	return s.plRepository
+}
+
+// PlaylistService - implementation service layer
+func (s *serviceProvider) PlaylistService(ctx context.Context) playlistService.PlaylistService {
+	if s.plService == nil {
+		s.plService = playlistService.NewService(s.PlaylistRepository(ctx))
+	}
+
+	return s.plService
+}
+
+// PlaylistImlp - implementation auth api layer
+func (s *serviceProvider) PlaylistImpl(ctx context.Context) *playlist.Implementation {
+	if s.plImpl == nil {
+		s.plImpl = playlist.NewImplementation(s.AuthService(ctx))
+	}
+
+	return s.plImpl
+}
+
+// StartPlayback - start goroutine for user playlist
+func (s *serviceProvider) StartPlayback(ctx context.Context) error {
+	return nil
 }

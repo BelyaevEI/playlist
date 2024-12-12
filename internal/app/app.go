@@ -42,7 +42,7 @@ func (a *App) Run(ctx context.Context) error {
 	ctx, cancel := context.WithCancel(ctx)
 
 	wg := &sync.WaitGroup{}
-	wg.Add(1)
+	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
@@ -50,6 +50,15 @@ func (a *App) Run(ctx context.Context) error {
 		err := a.runGRPCServer()
 		if err != nil {
 			logger.Error(fmt.Sprintf("failed to run grpc server: %v", err))
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+
+		err := a.startPlayback(ctx)
+		if err != nil {
+			logger.Debug(fmt.Sprintf("playback is failed: %v", err))
 		}
 	}()
 
@@ -72,4 +81,10 @@ func (a *App) runGRPCServer() error {
 	}
 
 	return nil
+}
+
+// Start playback
+func (a *App) startPlayback(ctx context.Context) error {
+
+	return a.serviceProvider.StartPlayback(ctx)
 }
