@@ -55,11 +55,7 @@ func (a *App) Run(ctx context.Context) error {
 
 	go func() {
 		defer wg.Done()
-
-		err := a.startPlayback(ctx)
-		if err != nil {
-			logger.Debug(fmt.Sprintf("playback is failed: %v", err))
-		}
+		a.startPlayback(ctx)
 	}()
 
 	initutils.GracefulShutdown(ctx, cancel, wg)
@@ -83,8 +79,15 @@ func (a *App) runGRPCServer() error {
 	return nil
 }
 
-// Start playback
-func (a *App) startPlayback(ctx context.Context) error {
-
-	return a.serviceProvider.StartPlayback(ctx)
+// Start playback playlist
+func (a *App) startPlayback(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			close(a.serviceProvider.userLoginCH)
+			return
+		default:
+			a.serviceProvider.StartPlayback(ctx)
+		}
+	}
 }

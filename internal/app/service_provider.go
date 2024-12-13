@@ -69,9 +69,9 @@ func (s *serviceProvider) PlaylistRepository(ctx context.Context) playlistRepo.P
 }
 
 // PlaylistService - implementation service layer
-func (s *serviceProvider) PlaylistService(ctx context.Context) playlistService.PlaylistService {
+func (s *serviceProvider) PlaylistService(ctx context.Context, userLoginCH chan string) playlistService.PlaylistService {
 	if s.plService == nil {
-		s.plService = playlistService.NewService(s.PlaylistRepository(ctx))
+		s.plService = playlistService.NewService(s.PlaylistRepository(ctx), userLoginCH)
 	}
 
 	return s.plService
@@ -80,13 +80,17 @@ func (s *serviceProvider) PlaylistService(ctx context.Context) playlistService.P
 // PlaylistImlp - implementation auth api layer
 func (s *serviceProvider) PlaylistImpl(ctx context.Context) *playlist.Implementation {
 	if s.plImpl == nil {
-		s.plImpl = playlist.NewImplementation(s.AuthService(ctx))
+		s.plImpl = playlist.NewImplementation(s.PlaylistService(ctx, s.userLoginCH))
 	}
 
 	return s.plImpl
 }
 
 // StartPlayback - start goroutine for user playlist
-func (s *serviceProvider) StartPlayback(ctx context.Context) error {
-	return nil
+func (s *serviceProvider) StartPlayback(ctx context.Context) {
+
+	// Given login user for playback playlist
+	login := <-s.userLoginCH
+
+	s.plService.StartPlayback(ctx, login)
 }
