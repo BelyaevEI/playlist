@@ -3,11 +3,14 @@ package playlist
 import "context"
 
 func (s *serv) StartPlayback(ctx context.Context, login string) {
-	usersPlayNow := make(map[string]struct{}, 0)
-
-	_, ok := usersPlayNow[login]
+	_, ok := s.usersPlaying[login]
 	if !ok {
-		usersPlayNow[login] = struct{}{}
-
+		s.usersPlaying[login] = struct{}{}
+		go s.playback(ctx, login)
 	}
+}
+
+// playback - run playlist for user and listen command
+func (s *serv) playback(ctx context.Context, login string) {
+
 }

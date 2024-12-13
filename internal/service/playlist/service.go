@@ -14,6 +14,7 @@ type PlaylistService interface {
 type serv struct {
 	playlistRepo playlistRepo.PlaylistRepository
 	userLoginCH  chan string
+	usersPlaying map[string]struct{}
 }
 
 // NewService creates a new playlist service.
@@ -21,5 +22,6 @@ func NewService(playlistRepo playlistRepo.PlaylistRepository, userLoginCH chan s
 	return &serv{
 		playlistRepo: playlistRepo,
 		userLoginCH:  userLoginCH,
+		usersPlaying: make(map[string]struct{}, 0),
 	}
 }
