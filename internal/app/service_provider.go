@@ -6,6 +6,7 @@ import (
 	"github.com/BelyaevEI/playlist/internal/api/auth"
 	"github.com/BelyaevEI/playlist/internal/api/playlist"
 	"github.com/BelyaevEI/playlist/internal/config"
+	"github.com/BelyaevEI/playlist/internal/logger"
 	authRepo "github.com/BelyaevEI/playlist/internal/repository/auth"
 	playlistRepo "github.com/BelyaevEI/playlist/internal/repository/playlist"
 	authService "github.com/BelyaevEI/playlist/internal/service/auth"
@@ -90,7 +91,8 @@ func (s *serviceProvider) PlaylistImpl(ctx context.Context) *playlist.Implementa
 func (s *serviceProvider) StartPlayback(ctx context.Context) {
 
 	// Given login user for playback playlist
-	login := <-s.userLoginCH
-
-	s.plService.StartPlayback(ctx, login)
+	for login := range s.userLoginCH {
+		go s.plService.StartPlayback(ctx, login)
+	}
+	logger.Info("stop running playback")
 }

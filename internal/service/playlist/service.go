@@ -2,7 +2,9 @@ package playlist
 
 import (
 	"context"
+	"sync"
 
+	"github.com/BelyaevEI/playlist/internal/model"
 	playlistRepo "github.com/BelyaevEI/playlist/internal/repository/playlist"
 )
 
@@ -14,7 +16,9 @@ type PlaylistService interface {
 type serv struct {
 	playlistRepo playlistRepo.PlaylistRepository
 	userLoginCH  chan string
+	actionCH     chan model.Command
 	usersPlaying map[string]struct{}
+	mu           sync.Mutex
 }
 
 // NewService creates a new playlist service.

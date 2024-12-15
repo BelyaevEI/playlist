@@ -12,14 +12,13 @@ type Song struct {
 }
 
 type Playlist struct {
-	User      string
-	Songs     []*Song
-	Current   *Song
-	Playing   bool
-	controlCh chan Command
+	User    string
+	Current *Song
+	Playing bool
 }
 
 type Command struct {
+	User   string
 	Action string // action: "pause", "play", "next", "prev"
 	Song   *Song  // maybe empty for play/pause
 }
