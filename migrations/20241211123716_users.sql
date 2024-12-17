@@ -2,14 +2,27 @@
 -- +goose StatementBegin
 CREATE TABLE users
 (
-    id SERIAL PRIMARY KEY,
-    user_login VARCHAR(255) UNIQUE NOT NULL,
+    user_login VARCHAR(255) PRIMARY KEY,
     pass_hash  VARCHAR,
     secret_word VARCHAR(255)
+);
+
+CREATE TABLE playlist
+(   
+    id SERIAL PRIMARY KEY,
+    user_login VARCHAR(255) NOT NULL,
+    playing BOOLEAN DEFAULT FALSE,
+    prev_id INT UNIQUE NOT NULL,
+    next_id INT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    article TEXT NOT NULL,
+    duration INT NOT NULL,
+    FOREIGN KEY (user_login) REFERENCES users(user_login) ON DELETE CASCADE
 );
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
 DROP TABLE users;
+DROP TABLE playlist;
 -- +goose StatementEnd

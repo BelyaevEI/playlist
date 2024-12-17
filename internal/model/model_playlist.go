@@ -5,10 +5,12 @@ import "time"
 type Song struct {
 	ID       int64
 	Title    string
-	Artist   string
+	Article  string
 	TimeSong time.Duration
-	Prev     *Song
-	Next     *Song
+	Prev     int64
+	Next     int64
+	Playnig  bool
+	Duration time.Duration
 }
 
 type Playlist struct {
