@@ -85,9 +85,10 @@ func (a *App) startPlayback(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			close(a.serviceProvider.userLoginCH)
-			return
+			a.serviceProvider.CloseActionCH()
 		default:
 			a.serviceProvider.StartPlayback(ctx)
+			return
 		}
 	}
 }

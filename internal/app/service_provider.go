@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"sync"
 
 	"github.com/BelyaevEI/playlist/internal/api/auth"
 	"github.com/BelyaevEI/playlist/internal/api/playlist"
@@ -89,10 +90,18 @@ func (s *serviceProvider) PlaylistImpl(ctx context.Context) *playlist.Implementa
 
 // StartPlayback - start goroutine for user playlist
 func (s *serviceProvider) StartPlayback(ctx context.Context) {
+	wg := sync.WaitGroup{}
 
 	// Given login user for playback playlist
 	for login := range s.userLoginCH {
-		go s.plService.StartPlayback(ctx, login)
+		wg.Add(1)
+		go s.plService.StartPlayback(ctx, login, &wg)
 	}
+
+	wg.Wait()
 	logger.Info("stop running playback")
+}
+
+func (s *serviceProvider) CloseActionCH() {
+	s.plService.CloseActionCH()
 }

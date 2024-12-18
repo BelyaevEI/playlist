@@ -10,7 +10,8 @@ import (
 
 // PlaylistService represents a service for playlist entities.
 type PlaylistService interface {
-	StartPlayback(ctx context.Context, login string)
+	StartPlayback(ctx context.Context, login string, wg *sync.WaitGroup)
+	CloseActionCH()
 }
 
 type serv struct {
@@ -27,5 +28,6 @@ func NewService(playlistRepo playlistRepo.PlaylistRepository, userLoginCH chan s
 		playlistRepo: playlistRepo,
 		userLoginCH:  userLoginCH,
 		usersPlaying: make(map[string]struct{}, 0),
+		actionCH:     make(chan model.Command),
 	}
 }

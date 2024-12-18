@@ -18,6 +18,7 @@ service PlaylistV1{
 message AddSongRequest {
     string song_name = 1;
     string artist = 2;
-    int32 duration = 3;
+    string title = 3;
+    int32 duration = 4;
   }
   
