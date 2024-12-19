@@ -36,7 +36,6 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 
 	for {
 		select {
-
 		// given action command from user
 		case cmd, ok := <-s.actionCH:
 			// if chanel close then app is finished
@@ -60,8 +59,8 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 						//playing the first song of playlist
 						playlist.Current = &song
 					}
-
 				}
+
 			case "pause":
 				// if getting command pause then stop playing song
 				if cmd.User == playlist.User {
