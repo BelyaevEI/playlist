@@ -14,7 +14,7 @@ func (i *Implementation) Login(ctx context.Context, req *desc.LoginRequest) (*de
 
 	token, err := i.authService.Login(ctx, converter.ToLoginFromDesc(req))
 	if err != nil {
-		return &desc.Response{RefreshToken: ""}, status.Errorf(codes.PermissionDenied, err.Error())
+		return &desc.Response{RefreshToken: ""}, status.Errorf(codes.PermissionDenied, "%s", err.Error())
 	}
 
 	return &desc.Response{RefreshToken: token}, nil
