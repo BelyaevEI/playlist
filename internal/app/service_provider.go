@@ -7,6 +7,7 @@ import (
 	"github.com/BelyaevEI/playlist/internal/api/auth"
 	"github.com/BelyaevEI/playlist/internal/api/playlist"
 	"github.com/BelyaevEI/playlist/internal/config"
+	"github.com/BelyaevEI/playlist/internal/interceptor"
 	"github.com/BelyaevEI/playlist/internal/logger"
 	authRepo "github.com/BelyaevEI/playlist/internal/repository/auth"
 	playlistRepo "github.com/BelyaevEI/playlist/internal/repository/playlist"
@@ -15,7 +16,9 @@ import (
 )
 
 type serviceProvider struct {
-	config         config.Config
+	config          config.Config
+	authInterceptor interceptor.AuthInterceptor
+
 	authImpl       *auth.Implementation
 	authService    authService.AuthService
 	authRepository authRepo.AuthRepository
@@ -27,10 +30,11 @@ type serviceProvider struct {
 	userLoginCH chan string
 }
 
-func newServiceProvider(cfg config.Config) *serviceProvider {
+func newServiceProvider(cfg config.Config, authInterceptor interceptor.AuthInterceptor) *serviceProvider {
 	return &serviceProvider{
-		config:      cfg,
-		userLoginCH: make(chan string),
+		config:          cfg,
+		userLoginCH:     make(chan string),
+		authInterceptor: authInterceptor,
 	}
 }
 
@@ -104,4 +108,13 @@ func (s *serviceProvider) StartPlayback(ctx context.Context) {
 
 func (s *serviceProvider) CloseActionCH() {
 	s.plService.CloseActionCH()
+}
+
+// Initializating authentification interceptor
+func (s *serviceProvider) InitAuthInterceptor(ctx context.Context) interceptor.AuthInterceptor {
+	if s.authInterceptor == nil {
+		s.authInterceptor = interceptor.NewAuthInterceptor(ctx, s.config.DSN())
+	}
+
+	return s.authInterceptor
 }

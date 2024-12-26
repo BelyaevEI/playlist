@@ -11,6 +11,7 @@ import (
 // PlaylistService represents a service for playlist entities.
 type PlaylistService interface {
 	StartPlayback(ctx context.Context, login string, wg *sync.WaitGroup)
+	AddSong(ctx context.Context, song *model.SongRequest) error
 	CloseActionCH()
 }
 

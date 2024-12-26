@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"errors"
 
+	jwtutils "github.com/BelyaevEI/playlist/internal/jwt_utils"
 	"github.com/BelyaevEI/playlist/internal/logger"
 	"github.com/BelyaevEI/playlist/internal/model"
 
@@ -53,7 +54,7 @@ func (s *serv) Registration(ctx context.Context, userRegistration *model.UserReg
 
 	// Create a new jwt for user
 	// if generating token is failed then user must be log in with login and password
-	token, err := generateToken(userRegistration.Login, secretWord)
+	token, err := jwtutils.GenerateToken(userRegistration.Login, secretWord)
 	if err != nil {
 		logger.Debug(err.Error())
 	}

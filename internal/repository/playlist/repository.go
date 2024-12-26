@@ -14,6 +14,7 @@ import (
 type PlaylistRepository interface {
 	GetFirstSongOfUser(ctx context.Context, login string) (model.Song, error)
 	GetNextSongOfUser(ctx context.Context, login string, curID, nextID int64) (model.Song, error)
+	AddSong(ctx context.Context, song *model.SongRequest) error
 }
 
 type repo struct {

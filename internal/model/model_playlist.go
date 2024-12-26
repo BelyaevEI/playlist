@@ -24,3 +24,10 @@ type Command struct {
 	Action string // action: "pause", "play", "next", "prev"
 	Song   *Song  // maybe empty for play/pause
 }
+
+type SongRequest struct {
+	Login    string
+	Title    string
+	Article  string
+	Duration time.Duration
+}

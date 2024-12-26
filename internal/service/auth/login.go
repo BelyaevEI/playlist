@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	jwtutils "github.com/BelyaevEI/playlist/internal/jwt_utils"
 	"github.com/BelyaevEI/playlist/internal/logger"
 	"github.com/BelyaevEI/playlist/internal/model"
 
@@ -25,7 +26,7 @@ func (s *serv) Login(ctx context.Context, userLogin *model.UserLogin) (string, e
 	}
 
 	// Create a new jwt for user
-	token, err := generateToken(selectUser.Login, selectUser.SecretWord)
+	token, err := jwtutils.GenerateToken(selectUser.Login, selectUser.SecretWord)
 	if err != nil {
 		logger.Debug(err.Error())
 	}

@@ -9,6 +9,7 @@ import (
 	descAuth "github.com/BelyaevEI/playlist/pkg/auth_v1"
 	descPlaylist "github.com/BelyaevEI/playlist/pkg/playlist_v1"
 
+	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
@@ -32,9 +33,17 @@ func (a *App) initDependens(ctx context.Context) error {
 	return nil
 }
 
+// New GRPC server
 func (a *App) initGRPCServer(ctx context.Context) error {
 
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(interceptor.LogInterceptor))
+	a.grpcServer = grpc.NewServer(
+		grpc.Creds(insecure.NewCredentials()),
+		grpc.UnaryInterceptor(
+			grpcMiddleware.ChainUnaryServer(
+				interceptor.LogInterceptor,
+				a.serviceProvider.authInterceptor.Authentification()),
+		),
+	)
 
 	reflection.Register(a.grpcServer)
 
@@ -46,13 +55,13 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 }
 
 // Inititalizating entity service provider
-func (a *App) initServiceProvider(_ context.Context) error {
+func (a *App) initServiceProvider(ctx context.Context) error {
 
 	cfg, err := config.Load("./config.env")
 	if err != nil {
 		return err
 	}
-	a.serviceProvider = newServiceProvider(cfg)
+	a.serviceProvider = newServiceProvider(cfg, a.serviceProvider.InitAuthInterceptor(ctx))
 
 	return nil
 }
