@@ -12,6 +12,11 @@ import (
 type PlaylistService interface {
 	StartPlayback(ctx context.Context, login string, wg *sync.WaitGroup)
 	AddSong(ctx context.Context, song *model.SongRequest) error
+	DeleteSong(ctx context.Context, song *model.SongRequest) error
+	PlaySong(ctx context.Context, login string)
+	PauseSong(ctx context.Context, login string)
+	PrevSong(ctx context.Context, login string)
+	NextSong(ctx context.Context, login string)
 	CloseActionCH()
 }
 

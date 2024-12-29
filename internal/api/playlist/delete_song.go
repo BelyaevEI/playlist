@@ -11,9 +11,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (i *Implementation) AddSong(ctx context.Context, req *desc.AddSongRequest) (*emptypb.Empty, error) {
-
-	err := i.playlistService.AddSong(ctx, converter.ToAddSongFromDesc(req))
+func (i *Implementation) DeleteSong(ctx context.Context, req *desc.AddSongRequest) (*emptypb.Empty, error) {
+	err := i.playlistService.DeleteSong(ctx, converter.ToAddSongFromDesc(req))
 	if err != nil {
 		return &emptypb.Empty{}, status.Errorf(codes.Internal, "%s", err.Error())
 	}

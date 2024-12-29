@@ -6,7 +6,6 @@ type Song struct {
 	ID       int64
 	Title    string
 	Article  string
-	TimeSong time.Duration
 	Prev     int64
 	Next     int64
 	Playnig  bool

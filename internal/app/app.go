@@ -81,14 +81,20 @@ func (a *App) runGRPCServer() error {
 
 // Start playback playlist
 func (a *App) startPlayback(ctx context.Context) {
-	for {
-		select {
-		case <-ctx.Done():
-			close(a.serviceProvider.userLoginCH)
-			a.serviceProvider.CloseActionCH()
-		default:
-			a.serviceProvider.StartPlayback(ctx)
-			return
-		}
-	}
+
+	a.serviceProvider.StartPlayback(ctx)
+	<-ctx.Done()
+	close(a.serviceProvider.userLoginCH)
+	a.serviceProvider.CloseActionCH()
+
+	// for {
+	// 	select {
+	// 	case <-ctx.Done():
+	// 		close(a.serviceProvider.userLoginCH)
+	// 		a.serviceProvider.CloseActionCH()
+	// 	default:
+	// 		a.serviceProvider.StartPlayback(ctx)
+	// 		return
+	// 	}
+	// }
 }

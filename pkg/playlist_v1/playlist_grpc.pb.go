@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,12 +32,12 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PlaylistV1Client interface {
-	AddSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*Response, error)
-	DeleteSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*Response, error)
-	Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	AddSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type playlistV1Client struct {
@@ -47,9 +48,9 @@ func NewPlaylistV1Client(cc grpc.ClientConnInterface) PlaylistV1Client {
 	return &playlistV1Client{cc}
 }
 
-func (c *playlistV1Client) AddSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) AddSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_AddSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -57,9 +58,9 @@ func (c *playlistV1Client) AddSong(ctx context.Context, in *AddSongRequest, opts
 	return out, nil
 }
 
-func (c *playlistV1Client) DeleteSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) DeleteSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_DeleteSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -67,9 +68,9 @@ func (c *playlistV1Client) DeleteSong(ctx context.Context, in *AddSongRequest, o
 	return out, nil
 }
 
-func (c *playlistV1Client) Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_Play_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -77,9 +78,9 @@ func (c *playlistV1Client) Play(ctx context.Context, in *Request, opts ...grpc.C
 	return out, nil
 }
 
-func (c *playlistV1Client) Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_Pause_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -87,9 +88,9 @@ func (c *playlistV1Client) Pause(ctx context.Context, in *Request, opts ...grpc.
 	return out, nil
 }
 
-func (c *playlistV1Client) Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_Next_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -97,9 +98,9 @@ func (c *playlistV1Client) Next(ctx context.Context, in *Request, opts ...grpc.C
 	return out, nil
 }
 
-func (c *playlistV1Client) Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *playlistV1Client) Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PlaylistV1_Prev_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -111,12 +112,12 @@ func (c *playlistV1Client) Prev(ctx context.Context, in *Request, opts ...grpc.C
 // All implementations must embed UnimplementedPlaylistV1Server
 // for forward compatibility
 type PlaylistV1Server interface {
-	AddSong(context.Context, *AddSongRequest) (*Response, error)
-	DeleteSong(context.Context, *AddSongRequest) (*Response, error)
-	Play(context.Context, *Request) (*Response, error)
-	Pause(context.Context, *Request) (*Response, error)
-	Next(context.Context, *Request) (*Response, error)
-	Prev(context.Context, *Request) (*Response, error)
+	AddSong(context.Context, *AddSongRequest) (*emptypb.Empty, error)
+	DeleteSong(context.Context, *AddSongRequest) (*emptypb.Empty, error)
+	Play(context.Context, *Request) (*emptypb.Empty, error)
+	Pause(context.Context, *Request) (*emptypb.Empty, error)
+	Next(context.Context, *Request) (*emptypb.Empty, error)
+	Prev(context.Context, *Request) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPlaylistV1Server()
 }
 
@@ -124,22 +125,22 @@ type PlaylistV1Server interface {
 type UnimplementedPlaylistV1Server struct {
 }
 
-func (UnimplementedPlaylistV1Server) AddSong(context.Context, *AddSongRequest) (*Response, error) {
+func (UnimplementedPlaylistV1Server) AddSong(context.Context, *AddSongRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSong not implemented")
 }
-func (UnimplementedPlaylistV1Server) DeleteSong(context.Context, *AddSongRequest) (*Response, error) {
+func (UnimplementedPlaylistV1Server) DeleteSong(context.Context, *AddSongRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSong not implemented")
 }
-func (UnimplementedPlaylistV1Server) Play(context.Context, *Request) (*Response, error) {
+func (UnimplementedPlaylistV1Server) Play(context.Context, *Request) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Play not implemented")
 }
-func (UnimplementedPlaylistV1Server) Pause(context.Context, *Request) (*Response, error) {
+func (UnimplementedPlaylistV1Server) Pause(context.Context, *Request) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Pause not implemented")
 }
-func (UnimplementedPlaylistV1Server) Next(context.Context, *Request) (*Response, error) {
+func (UnimplementedPlaylistV1Server) Next(context.Context, *Request) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Next not implemented")
 }
-func (UnimplementedPlaylistV1Server) Prev(context.Context, *Request) (*Response, error) {
+func (UnimplementedPlaylistV1Server) Prev(context.Context, *Request) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Prev not implemented")
 }
 func (UnimplementedPlaylistV1Server) mustEmbedUnimplementedPlaylistV1Server() {}

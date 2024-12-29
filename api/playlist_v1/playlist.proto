@@ -2,15 +2,17 @@ syntax = "proto3";
 
 package playlist_v1;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "github.com/BelyaevEI/playlist/pkg/playlist_v1;playlist_v1";
 
 service PlaylistV1{
-    rpc AddSong(AddSongRequest) returns (Response);
-    rpc DeleteSong(AddSongRequest) returns(Response);
-    rpc Play(Request) returns (Response);
-    rpc Pause(Request) returns (Response);
-    rpc Next(Request) returns (Response);
-    rpc Prev(Request) returns (Response);
+    rpc AddSong(AddSongRequest) returns (google.protobuf.Empty);
+    rpc DeleteSong(AddSongRequest) returns(google.protobuf.Empty);
+    rpc Play(Request) returns (google.protobuf.Empty);
+    rpc Pause(Request) returns (google.protobuf.Empty);
+    rpc Next(Request) returns (google.protobuf.Empty);
+    rpc Prev(Request) returns (google.protobuf.Empty);
 }
 
 message AddSongRequest {
@@ -23,7 +25,3 @@ message AddSongRequest {
 message Request{
     string login = 1;
 }
-
-message Response {
-    string refresh_token = 1;
-  }

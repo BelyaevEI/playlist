@@ -51,6 +51,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 		handler grpc.UnaryHandler,
 	) (interface{}, error) {
 
+		// check jwt for playlist methods
 		protectedMethods := map[string]bool{
 			"/PlaylistV1/AddSong":    true,
 			"/PlaylistV1/DeleteSong": true,
@@ -92,8 +93,8 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
 			case "/PlaylistV1/DeleteSong":
-				if addSongReq, ok := req.(*playlist_v1.AddSongRequest); ok {
-					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
+				if delete, ok := req.(*playlist_v1.AddSongRequest); ok {
+					newToken, err := ai.checkJWT(ctx, token, delete.GetLogin())
 					if err != nil {
 						logger.Error(fmt.Sprintf("check JWT is failed %s", err.Error()))
 						return nil, status.Errorf(codes.Unauthenticated, "invalid authorization token")
@@ -102,8 +103,8 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
 			case "/PlaylistV1/Play":
-				if addSongReq, ok := req.(*playlist_v1.Request); ok {
-					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
+				if play, ok := req.(*playlist_v1.Request); ok {
+					newToken, err := ai.checkJWT(ctx, token, play.GetLogin())
 					if err != nil {
 						logger.Error(fmt.Sprintf("check JWT is failed %s", err.Error()))
 						return nil, status.Errorf(codes.Unauthenticated, "invalid authorization token")
@@ -112,8 +113,8 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
 			case "/PlaylistV1/Pause":
-				if addSongReq, ok := req.(*playlist_v1.Request); ok {
-					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
+				if pause, ok := req.(*playlist_v1.Request); ok {
+					newToken, err := ai.checkJWT(ctx, token, pause.GetLogin())
 					if err != nil {
 						logger.Error(fmt.Sprintf("check JWT is failed %s", err.Error()))
 						return nil, status.Errorf(codes.Unauthenticated, "invalid authorization token")
@@ -122,8 +123,8 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
 			case "/PlaylistV1/Prev":
-				if addSongReq, ok := req.(*playlist_v1.Request); ok {
-					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
+				if prev, ok := req.(*playlist_v1.Request); ok {
+					newToken, err := ai.checkJWT(ctx, token, prev.GetLogin())
 					if err != nil {
 						logger.Error(fmt.Sprintf("check JWT is failed %s", err.Error()))
 						return nil, status.Errorf(codes.Unauthenticated, "invalid authorization token")
@@ -132,8 +133,8 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
 			case "/PlaylistV1/Next":
-				if addSongReq, ok := req.(*playlist_v1.Request); ok {
-					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
+				if next, ok := req.(*playlist_v1.Request); ok {
+					newToken, err := ai.checkJWT(ctx, token, next.GetLogin())
 					if err != nil {
 						logger.Error(fmt.Sprintf("check JWT is failed %s", err.Error()))
 						return nil, status.Errorf(codes.Unauthenticated, "invalid authorization token")
