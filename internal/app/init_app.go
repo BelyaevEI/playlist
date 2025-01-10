@@ -20,6 +20,7 @@ func (a *App) initDependens(ctx context.Context) error {
 	inits := []func(context.Context) error{
 		a.initServiceProvider,
 		a.initLogger,
+		a.initAuthInterceptor,
 		a.initGRPCServer,
 	}
 
@@ -61,7 +62,7 @@ func (a *App) initServiceProvider(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	a.serviceProvider = newServiceProvider(cfg, a.serviceProvider.InitAuthInterceptor(ctx))
+	a.serviceProvider = newServiceProvider(cfg)
 
 	return nil
 }
@@ -70,5 +71,11 @@ func (a *App) initServiceProvider(ctx context.Context) error {
 func (a *App) initLogger(_ context.Context) error {
 	logger.Init(logger.GetCore(logger.GetAtomicLevel(a.serviceProvider.config.LogLevel())))
 
+	return nil
+}
+
+// initAuthInterceptor initializating connect to db for interceptor
+func (a *App) initAuthInterceptor(ctx context.Context) error {
+	a.serviceProvider.InitAuthInterceptor(ctx)
 	return nil
 }

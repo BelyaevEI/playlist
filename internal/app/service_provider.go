@@ -30,11 +30,10 @@ type serviceProvider struct {
 	userLoginCH chan string
 }
 
-func newServiceProvider(cfg config.Config, authInterceptor interceptor.AuthInterceptor) *serviceProvider {
+func newServiceProvider(cfg config.Config) *serviceProvider {
 	return &serviceProvider{
-		config:          cfg,
-		userLoginCH:     make(chan string),
-		authInterceptor: authInterceptor,
+		config:      cfg,
+		userLoginCH: make(chan string),
 	}
 }
 
@@ -111,10 +110,8 @@ func (s *serviceProvider) CloseActionCH() {
 }
 
 // Initializating authentification interceptor
-func (s *serviceProvider) InitAuthInterceptor(ctx context.Context) interceptor.AuthInterceptor {
+func (s *serviceProvider) InitAuthInterceptor(ctx context.Context) {
 	if s.authInterceptor == nil {
 		s.authInterceptor = interceptor.NewAuthInterceptor(ctx, s.config.DSN())
 	}
-
-	return s.authInterceptor
 }

@@ -28,5 +28,6 @@ func ToAddSongFromDesc(song *descPlaylist.AddSongRequest) *model.SongRequest {
 		Title:    song.GetTitle(),
 		Article:  song.GetArticle(),
 		Duration: time.Duration(song.GetDuration()),
+		Login:    song.GetLogin(),
 	}
 }
