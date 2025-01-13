@@ -110,7 +110,6 @@ func (r *repo) GetNextSongOfUser(ctx context.Context, login string, currID, next
 	}
 
 	return song, nil
-
 }
 
 func (r *repo) GetPrevSongOfUser(ctx context.Context, login string, currID, prevID int64) (model.Song, error) {
