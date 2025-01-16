@@ -22,10 +22,10 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	PlaylistV1_AddSong_FullMethodName    = "/playlist_v1.PlaylistV1/AddSong"
 	PlaylistV1_DeleteSong_FullMethodName = "/playlist_v1.PlaylistV1/DeleteSong"
-	PlaylistV1_Play_FullMethodName       = "/playlist_v1.PlaylistV1/Play"
-	PlaylistV1_Pause_FullMethodName      = "/playlist_v1.PlaylistV1/Pause"
-	PlaylistV1_Next_FullMethodName       = "/playlist_v1.PlaylistV1/Next"
-	PlaylistV1_Prev_FullMethodName       = "/playlist_v1.PlaylistV1/Prev"
+	PlaylistV1_PlaySong_FullMethodName   = "/playlist_v1.PlaylistV1/PlaySong"
+	PlaylistV1_PauseSong_FullMethodName  = "/playlist_v1.PlaylistV1/PauseSong"
+	PlaylistV1_NextSong_FullMethodName   = "/playlist_v1.PlaylistV1/NextSong"
+	PlaylistV1_PrevSong_FullMethodName   = "/playlist_v1.PlaylistV1/PrevSong"
 )
 
 // PlaylistV1Client is the client API for PlaylistV1 service.
@@ -34,10 +34,10 @@ const (
 type PlaylistV1Client interface {
 	AddSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteSong(ctx context.Context, in *AddSongRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PlaySong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PauseSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	NextSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PrevSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type playlistV1Client struct {
@@ -68,40 +68,40 @@ func (c *playlistV1Client) DeleteSong(ctx context.Context, in *AddSongRequest, o
 	return out, nil
 }
 
-func (c *playlistV1Client) Play(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *playlistV1Client) PlaySong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, PlaylistV1_Play_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlaylistV1_PlaySong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *playlistV1Client) Pause(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *playlistV1Client) PauseSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, PlaylistV1_Pause_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlaylistV1_PauseSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *playlistV1Client) Next(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *playlistV1Client) NextSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, PlaylistV1_Next_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlaylistV1_NextSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *playlistV1Client) Prev(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *playlistV1Client) PrevSong(ctx context.Context, in *Request, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, PlaylistV1_Prev_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlaylistV1_PrevSong_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,10 +114,10 @@ func (c *playlistV1Client) Prev(ctx context.Context, in *Request, opts ...grpc.C
 type PlaylistV1Server interface {
 	AddSong(context.Context, *AddSongRequest) (*emptypb.Empty, error)
 	DeleteSong(context.Context, *AddSongRequest) (*emptypb.Empty, error)
-	Play(context.Context, *Request) (*emptypb.Empty, error)
-	Pause(context.Context, *Request) (*emptypb.Empty, error)
-	Next(context.Context, *Request) (*emptypb.Empty, error)
-	Prev(context.Context, *Request) (*emptypb.Empty, error)
+	PlaySong(context.Context, *Request) (*emptypb.Empty, error)
+	PauseSong(context.Context, *Request) (*emptypb.Empty, error)
+	NextSong(context.Context, *Request) (*emptypb.Empty, error)
+	PrevSong(context.Context, *Request) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPlaylistV1Server()
 }
 
@@ -131,17 +131,17 @@ func (UnimplementedPlaylistV1Server) AddSong(context.Context, *AddSongRequest) (
 func (UnimplementedPlaylistV1Server) DeleteSong(context.Context, *AddSongRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSong not implemented")
 }
-func (UnimplementedPlaylistV1Server) Play(context.Context, *Request) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Play not implemented")
+func (UnimplementedPlaylistV1Server) PlaySong(context.Context, *Request) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlaySong not implemented")
 }
-func (UnimplementedPlaylistV1Server) Pause(context.Context, *Request) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Pause not implemented")
+func (UnimplementedPlaylistV1Server) PauseSong(context.Context, *Request) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PauseSong not implemented")
 }
-func (UnimplementedPlaylistV1Server) Next(context.Context, *Request) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Next not implemented")
+func (UnimplementedPlaylistV1Server) NextSong(context.Context, *Request) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NextSong not implemented")
 }
-func (UnimplementedPlaylistV1Server) Prev(context.Context, *Request) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Prev not implemented")
+func (UnimplementedPlaylistV1Server) PrevSong(context.Context, *Request) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PrevSong not implemented")
 }
 func (UnimplementedPlaylistV1Server) mustEmbedUnimplementedPlaylistV1Server() {}
 
@@ -192,74 +192,74 @@ func _PlaylistV1_DeleteSong_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlaylistV1_Play_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlaylistV1_PlaySong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlaylistV1Server).Play(ctx, in)
+		return srv.(PlaylistV1Server).PlaySong(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlaylistV1_Play_FullMethodName,
+		FullMethod: PlaylistV1_PlaySong_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlaylistV1Server).Play(ctx, req.(*Request))
+		return srv.(PlaylistV1Server).PlaySong(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlaylistV1_Pause_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlaylistV1_PauseSong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlaylistV1Server).Pause(ctx, in)
+		return srv.(PlaylistV1Server).PauseSong(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlaylistV1_Pause_FullMethodName,
+		FullMethod: PlaylistV1_PauseSong_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlaylistV1Server).Pause(ctx, req.(*Request))
+		return srv.(PlaylistV1Server).PauseSong(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlaylistV1_Next_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlaylistV1_NextSong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlaylistV1Server).Next(ctx, in)
+		return srv.(PlaylistV1Server).NextSong(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlaylistV1_Next_FullMethodName,
+		FullMethod: PlaylistV1_NextSong_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlaylistV1Server).Next(ctx, req.(*Request))
+		return srv.(PlaylistV1Server).NextSong(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlaylistV1_Prev_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlaylistV1_PrevSong_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlaylistV1Server).Prev(ctx, in)
+		return srv.(PlaylistV1Server).PrevSong(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlaylistV1_Prev_FullMethodName,
+		FullMethod: PlaylistV1_PrevSong_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlaylistV1Server).Prev(ctx, req.(*Request))
+		return srv.(PlaylistV1Server).PrevSong(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -280,20 +280,20 @@ var PlaylistV1_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PlaylistV1_DeleteSong_Handler,
 		},
 		{
-			MethodName: "Play",
-			Handler:    _PlaylistV1_Play_Handler,
+			MethodName: "PlaySong",
+			Handler:    _PlaylistV1_PlaySong_Handler,
 		},
 		{
-			MethodName: "Pause",
-			Handler:    _PlaylistV1_Pause_Handler,
+			MethodName: "PauseSong",
+			Handler:    _PlaylistV1_PauseSong_Handler,
 		},
 		{
-			MethodName: "Next",
-			Handler:    _PlaylistV1_Next_Handler,
+			MethodName: "NextSong",
+			Handler:    _PlaylistV1_NextSong_Handler,
 		},
 		{
-			MethodName: "Prev",
-			Handler:    _PlaylistV1_Prev_Handler,
+			MethodName: "PrevSong",
+			Handler:    _PlaylistV1_PrevSong_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

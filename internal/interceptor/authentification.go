@@ -53,12 +53,12 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 		// check jwt for playlist methods
 		protectedMethods := map[string]bool{
-			"/PlaylistV1/AddSong":    true,
-			"/PlaylistV1/DeleteSong": true,
-			"/PlaylistV1/Play":       true,
-			"/PlaylistV1/Pause":      true,
-			"/PlaylistV1/Prev":       true,
-			"/PlaylistV1/Next":       true,
+			"/playlist_v1.PlaylistV1/AddSong":    true,
+			"/playlist_v1.PlaylistV1/DeleteSong": true,
+			"/playlist_v1.PlaylistV1/Play":       true,
+			"/playlist_v1.PlaylistV1/Pause":      true,
+			"/playlist_v1.PlaylistV1/Prev":       true,
+			"/playlist_v1.PlaylistV1/Next":       true,
 		}
 
 		if protectedMethods[info.FullMethod] {
@@ -82,7 +82,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 			// Check JWT for other method
 			switch info.FullMethod {
-			case "/PlaylistV1/AddSong":
+			case "/playlist_v1.PlaylistV1/AddSong":
 				if addSongReq, ok := req.(*playlist_v1.AddSongRequest); ok {
 					newToken, err := ai.checkJWT(ctx, token, addSongReq.GetLogin())
 					if err != nil {
@@ -92,7 +92,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
-			case "/PlaylistV1/DeleteSong":
+			case "/playlist_v1.PlaylistV1/DeleteSong":
 				if delete, ok := req.(*playlist_v1.AddSongRequest); ok {
 					newToken, err := ai.checkJWT(ctx, token, delete.GetLogin())
 					if err != nil {
@@ -102,7 +102,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
-			case "/PlaylistV1/Play":
+			case "/playlist_v1.PlaylistV1/Play":
 				if play, ok := req.(*playlist_v1.Request); ok {
 					newToken, err := ai.checkJWT(ctx, token, play.GetLogin())
 					if err != nil {
@@ -112,7 +112,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
-			case "/PlaylistV1/Pause":
+			case "/playlist_v1.PlaylistV1/Pause":
 				if pause, ok := req.(*playlist_v1.Request); ok {
 					newToken, err := ai.checkJWT(ctx, token, pause.GetLogin())
 					if err != nil {
@@ -122,7 +122,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
-			case "/PlaylistV1/Prev":
+			case "/playlist_v1.PlaylistV1/Prev":
 				if prev, ok := req.(*playlist_v1.Request); ok {
 					newToken, err := ai.checkJWT(ctx, token, prev.GetLogin())
 					if err != nil {
@@ -132,7 +132,7 @@ func (ai *authInterceptor) Authentification() grpc.UnaryServerInterceptor {
 
 					grpc.SetTrailer(ctx, metadata.Pairs("new-authorization", newToken))
 				}
-			case "/PlaylistV1/Next":
+			case "/playlist_v1.PlaylistV1/Next":
 				if next, ok := req.(*playlist_v1.Request); ok {
 					newToken, err := ai.checkJWT(ctx, token, next.GetLogin())
 					if err != nil {

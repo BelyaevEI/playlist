@@ -21,7 +21,7 @@ func (s *serv) Login(ctx context.Context, userLogin *model.UserLogin) (string, e
 	// Compare entered password and password from database
 	err = bcrypt.CompareHashAndPassword([]byte(selectUser.Password), []byte(userLogin.Password))
 	if err != nil {
-		logger.Debug(fmt.Sprintf("not compare hash and password: %s", err.Error()))
+		logger.Debug(fmt.Sprintf("not comparing hash and password: %s", err.Error()))
 		return "", err
 	}
 

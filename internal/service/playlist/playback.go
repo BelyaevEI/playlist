@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/BelyaevEI/playlist/internal/logger"
 	"github.com/BelyaevEI/playlist/internal/model"
@@ -55,6 +56,7 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 
 						//playing the first song of playlist
 						playlist.Current = &song
+						logger.Info(fmt.Sprintf("current song %v", playlist.Current))
 					}
 				}
 
@@ -63,11 +65,10 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 				if cmd.User == playlist.User {
 					playlist.Playing = false
 				}
-
+				logger.Info("pause playback")
 			case "next":
 				// if getting command next song then switch playing song
 				if cmd.User == playlist.User {
-					playlist.Playing = true
 
 					song, err := s.playlistRepo.GetNextSongOfUser(
 						ctx,
@@ -76,7 +77,6 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 						playlist.Current.Next,
 					)
 					if err != nil {
-
 						// if songs is finished in playlist then getting first song and playback
 						if err == sql.ErrNoRows {
 							song, err := s.playlistRepo.GetFirstSongOfUser(ctx, playlist.User)
@@ -84,25 +84,24 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 								logger.Error(fmt.Sprintf("get first song of user is failed: %v", err))
 								break
 							}
-
+							playlist.Playing = true
 							playlist.Current = &song
+							break
 						}
 						logger.Error(fmt.Sprintf("get next song of user is failed: %v", err))
 					}
-
+					playlist.Playing = true
 					playlist.Current = &song
 				}
 
 			case "prev":
 				// if getting command prev song then switch playing song
 				if cmd.User == playlist.User {
-					playlist.Playing = true
-
 					song, err := s.playlistRepo.GetPrevSongOfUser(
 						ctx,
 						playlist.User,
 						playlist.Current.ID,
-						playlist.Current.Next,
+						playlist.Current.Prev,
 					)
 					if err != nil {
 						// if songs is finished in playlist then getting first song and playback
@@ -112,12 +111,14 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 								logger.Error(fmt.Sprintf("get first song of user is failed: %v", err))
 								break
 							}
-
+							playlist.Playing = true
 							playlist.Current = &song
+							break
 						}
 						logger.Error(fmt.Sprintf("get prev song of user is failed: %v", err))
 					}
 
+					playlist.Playing = true
 					playlist.Current = &song
 				}
 			}
@@ -152,8 +153,7 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 				}
 
 				// play user current song
-				playlist.Current.Duration -= 1
-
+				playlist.Current.Duration -= 1 * time.Second
 				logger.Info(
 					fmt.Sprintf("playing now: %s - %s, time %d : %d : %d",
 						playlist.Current.Title,
@@ -162,7 +162,7 @@ func (s *serv) playback(ctx context.Context, login string, wg *sync.WaitGroup) {
 						int(playlist.Current.Duration.Minutes())%60,
 						int(playlist.Current.Duration.Seconds())%60),
 				)
-
+				time.Sleep(1 * time.Second)
 			}
 		}
 	}

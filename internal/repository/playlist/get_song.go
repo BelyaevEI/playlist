@@ -2,13 +2,17 @@ package playlist
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/BelyaevEI/playlist/internal/model"
 )
 
 func (r *repo) GetFirstSongOfUser(ctx context.Context, login string) (model.Song, error) {
 
-	var song model.Song
+	var (
+		song                   model.Song
+		currID, nextID, prevID sql.NullInt64
+	)
 
 	tx, err := r.db.Begin()
 	if err != nil {
@@ -24,10 +28,11 @@ func (r *repo) GetFirstSongOfUser(ctx context.Context, login string) (model.Song
 	`
 
 	row := tx.QueryRowContext(ctx, query, login)
-	if err := row.Scan(&song.ID,
+	if err := row.Scan(
+		&currID,
 		&song.Playnig,
-		&song.Prev,
-		&song.Next,
+		&prevID,
+		&nextID,
 		&song.Title,
 		&song.Article,
 		&song.Duration); err != nil {
@@ -35,6 +40,15 @@ func (r *repo) GetFirstSongOfUser(ctx context.Context, login string) (model.Song
 		return model.Song{}, err
 	}
 
+	if prevID.Valid {
+		song.Prev = prevID.Int64
+	}
+	if nextID.Valid {
+		song.Next = nextID.Int64
+	}
+	if currID.Valid {
+		song.ID = currID.Int64
+	}
 	// update song for defend changes
 	query = `
 		UPDATE playlist SET playing = $1
@@ -56,11 +70,19 @@ func (r *repo) GetFirstSongOfUser(ctx context.Context, login string) (model.Song
 
 func (r *repo) GetNextSongOfUser(ctx context.Context, login string, currID, nextID int64) (model.Song, error) {
 
-	var song model.Song
+	var (
+		song          model.Song
+		cID, nID, pID sql.NullInt64
+	)
 
 	tx, err := r.db.Begin()
 	if err != nil {
 		return model.Song{}, err
+	}
+
+	// checking next ID if equal zero then need given first song
+	if nextID == 0 {
+		return model.Song{}, sql.ErrNoRows
 	}
 
 	defer tx.Rollback()
@@ -71,15 +93,26 @@ func (r *repo) GetNextSongOfUser(ctx context.Context, login string, currID, next
 	`
 
 	row := tx.QueryRowContext(ctx, query, login, nextID)
-	if err := row.Scan(&song.ID,
+	if err := row.Scan(
+		&cID,
 		&song.Playnig,
-		&song.Prev,
-		&song.Next,
+		&pID,
+		&nID,
 		&song.Title,
 		&song.Article,
 		&song.Duration); err != nil {
 
 		return model.Song{}, err
+	}
+
+	if cID.Valid {
+		song.ID = cID.Int64
+	}
+	if pID.Valid {
+		song.Prev = pID.Int64
+	}
+	if nID.Valid {
+		song.Next = nID.Int64
 	}
 
 	// update song for defend changes
@@ -114,11 +147,19 @@ func (r *repo) GetNextSongOfUser(ctx context.Context, login string, currID, next
 
 func (r *repo) GetPrevSongOfUser(ctx context.Context, login string, currID, prevID int64) (model.Song, error) {
 
-	var song model.Song
+	var (
+		song          model.Song
+		cID, nID, pID sql.NullInt64
+	)
 
 	tx, err := r.db.Begin()
 	if err != nil {
 		return model.Song{}, err
+	}
+
+	// checking previosly ID if equal zero then need given first song
+	if prevID == 0 {
+		return model.Song{}, sql.ErrNoRows
 	}
 
 	defer tx.Rollback()
@@ -129,15 +170,26 @@ func (r *repo) GetPrevSongOfUser(ctx context.Context, login string, currID, prev
 	`
 
 	row := tx.QueryRowContext(ctx, query, login, prevID)
-	if err := row.Scan(&song.ID,
+	if err := row.Scan(
+		&cID,
 		&song.Playnig,
-		&song.Prev,
-		&song.Next,
+		&pID,
+		&nID,
 		&song.Title,
 		&song.Article,
 		&song.Duration); err != nil {
 
 		return model.Song{}, err
+	}
+
+	if cID.Valid {
+		song.ID = cID.Int64
+	}
+	if pID.Valid {
+		song.Prev = pID.Int64
+	}
+	if nID.Valid {
+		song.Next = nID.Int64
 	}
 
 	// update song for defend changes
@@ -168,5 +220,4 @@ func (r *repo) GetPrevSongOfUser(ctx context.Context, login string, currID, prev
 	}
 
 	return song, nil
-
 }

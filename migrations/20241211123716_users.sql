@@ -16,7 +16,7 @@ CREATE TABLE playlist
     next_id INT UNIQUE,
     title TEXT NOT NULL,
     article TEXT NOT NULL,
-    duration INT NOT NULL,
+    duration BIGINT NOT NULL,
     FOREIGN KEY (user_login) REFERENCES users(user_login) ON DELETE CASCADE
 );
 -- +goose StatementEnd

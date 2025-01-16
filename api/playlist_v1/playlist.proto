@@ -9,10 +9,10 @@ option go_package = "github.com/BelyaevEI/playlist/pkg/playlist_v1;playlist_v1";
 service PlaylistV1{
     rpc AddSong(AddSongRequest) returns (google.protobuf.Empty);
     rpc DeleteSong(AddSongRequest) returns(google.protobuf.Empty);
-    rpc Play(Request) returns (google.protobuf.Empty);
-    rpc Pause(Request) returns (google.protobuf.Empty);
-    rpc Next(Request) returns (google.protobuf.Empty);
-    rpc Prev(Request) returns (google.protobuf.Empty);
+    rpc PlaySong(Request) returns (google.protobuf.Empty);
+    rpc PauseSong(Request) returns (google.protobuf.Empty);
+    rpc NextSong(Request) returns (google.protobuf.Empty);
+    rpc PrevSong(Request) returns (google.protobuf.Empty);
 }
 
 message AddSongRequest {

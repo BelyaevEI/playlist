@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/BelyaevEI/playlist/internal/app"
+	"github.com/BelyaevEI/playlist/internal/logger"
 )
 
 func main() {
@@ -19,4 +20,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to run app: %s", err.Error())
 	}
+
+	logger.Info("shutdown server")
 }
