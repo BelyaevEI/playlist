@@ -4,12 +4,19 @@ go 1.23.3
 
 require (
 	github.com/BelyaevEI/platform_common v0.0.0-20240812112204-197a13d460e9
+	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/gojuno/minimock/v3 v3.4.3
 	github.com/jackc/pgx/v5 v5.7.1
 	github.com/joho/godotenv v1.5.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.68.1
 	google.golang.org/protobuf v1.35.2
+)
+
+require (
+	github.com/rogpeppe/go-internal v1.13.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
@@ -21,7 +28,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/stretchr/testify v1.10.0 // indirect
+	github.com/stretchr/testify v1.10.0
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.30.0
 	golang.org/x/net v0.32.0 // indirect

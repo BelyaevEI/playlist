@@ -13,5 +13,4 @@ func (s *serv) NextSong(ctx context.Context, login string) {
 	cmd.User = login
 
 	s.actionCH <- cmd
-
 }
