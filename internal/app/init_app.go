@@ -70,7 +70,6 @@ func (a *App) initServiceProvider(ctx context.Context) error {
 // initLogger initialization entity logger
 func (a *App) initLogger(_ context.Context) error {
 	logger.Init(logger.GetCore(logger.GetAtomicLevel(a.serviceProvider.config.LogLevel())))
-
 	return nil
 }
 
