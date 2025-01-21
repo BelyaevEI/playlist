@@ -14,5 +14,6 @@ func (s *serv) AddSong(ctx context.Context, song *model.SongRequest) error {
 		logger.Error(fmt.Sprintf("add song is failed %s", err.Error()))
 		return err
 	}
+
 	return nil
 }
