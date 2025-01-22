@@ -46,6 +46,6 @@ linters:
     - govet
     - ineffassign
     - revive
-    - staticcheck  # Заменяет megacheck
+    - staticcheck 
     - unused
     - typecheck
