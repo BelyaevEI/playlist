@@ -4,30 +4,38 @@ run:
   timeout: 10m
   issues-exit-code: 1
   tests: true
-  skip-dirs:
+
+issues:
+  exclude-use-default: false
+  exclude:
+    # Исключения, которые применяются ко всем линтерам
+    - G104  # _ instead of err checks
+    - exported func .* returns unexported type .*, which can be annoying to use
+    - should have a package comment
+    - don't use an underscore in package name
+  exclude-dirs:
     - bin
     - vendor
     - var
     - tmp
     - .cache
-  skip-files:
+  exclude-files:
     - \.pb\.go$
     - \.pb\.gw\.go$
 
 output:
-  format: colored-line-number
+  format: colored-line-number  
   print-issued-lines: true
   print-linter-name: true
 
 linters-settings:
-  govet:
-    check-shadowing: true
+  govet: {}  
   dupl:
     threshold: 100
   goconst:
-    min-len:         2
+    min-len: 2
     min-occurrences: 2
- 
+
 linters:
   disable-all: true
   enable:
@@ -37,16 +45,7 @@ linters:
     - gosec
     - govet
     - ineffassign
-    - megacheck
     - revive
-    - typecheck
+    - staticcheck  # Заменяет megacheck
     - unused
-
-issues:
-  exclude-use-default: false
-  exclude:
-    # _ instead of err checks
-    - G104
-    - exported func .* returns unexported type .*, which can be annoying to use
-    - should have a package comment
-    - don't use an underscore in package name
+    - typecheck
